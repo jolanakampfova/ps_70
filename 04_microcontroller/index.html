@@ -58,15 +58,36 @@
 
                   <br>
 
+                  <br>
+
+                  <h4>Model of circuit</h4>
+
+                  <img src="model.PNG" alt="Picture of thing" style="width: 100%; max-width: 450px; height: auto;">
+
+                  <br>
+
+                  <pre><code>
+                  const int LIGHT_SENSOR = D0;
+const int LED          = D7;
+int analogValue;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(LED, OUTPUT);
+  pinMode(LIGHT_SENSOR, INPUT);
+}
+
+void loop() {
+  analogValue = analogRead(LIGHT_SENSOR);
+    if(analogValue < 2000)
+    digitalWrite(LED, HIGH); // LED on
+  else
+    digitalWrite(LED, LOW);  // LED off
+  Serial.println(analogValue);
+}
+                  </code></pre>
 
 
-                  <img src="image3.png" alt="PS70 Spring26" style="width: 100%; max-width: 600px; height: auto;"> <br> Wearable Rube Goldberg machine: a dress that contains a continuous chain of small mechanical interactions embedded into its structure. Rather than necessarily having a practical purpose, the machine exists purely for visual spectacle and  absurdity. Small elements such as rolling marbles, tilting ramps, rotating levers, and falling beads are integrated into the garment’s surface and interior layers.</p>
-
-                <h4>Idea 2: Ice Scultupture Automation</h4>
-                <p><img src="image1.png" alt="PS70 Spring26" style="width: 100%; max-width: 600px; height: auto;"> <br> A small-scale automated machine that “sculpts” ice using controlled heat, esentially functioning as a sort of inverse of a traditional 3D printer. Instead of depositing material, the device removes material by melting and textures into a block of ice based on digital input.</p>
-
-                <h4>Idea 3: Magic Key</h4>
-                <p><img src="image2.png" alt="PS70 Spring26" style="width: 100%; max-width: 600px; height: auto;"></p>
 
                 
             </div>
