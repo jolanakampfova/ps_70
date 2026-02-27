@@ -68,24 +68,26 @@
                   <h4>Code snipet</h4>
 
                   <pre><code>
-                  const int LIGHT_SENSOR = D0;
-                  const int LED          = D7;
+const int LIGHT_SENSOR = D0;
+const int LED = D7;
 int analogValue;
 
-void setup() {
-  Serial.begin(115200);
-  pinMode(LED, OUTPUT);
-  pinMode(LIGHT_SENSOR, INPUT);
-}
+void setup() 
+    {
+    Serial.begin(115200);
+    pinMode(LED, OUTPUT);
+    pinMode(LIGHT_SENSOR, INPUT);
+    }
 
-void loop() {
-  analogValue = analogRead(LIGHT_SENSOR);
+void loop() 
+    {
+    analogValue = analogRead(LIGHT_SENSOR);
     if(analogValue < 2000)
-    digitalWrite(LED, HIGH); // LED on
-  else
-    digitalWrite(LED, LOW);  // LED off
-  Serial.println(analogValue);
-}
+        digitalWrite(LED, HIGH); // LED on
+    else
+        digitalWrite(LED, LOW);  // LED off
+        Serial.println(analogValue);
+    }
                   </code></pre>
 
 
