@@ -107,3 +107,25 @@ code {
   font-family: monospace;
 }
 
+.download-btn {
+  display: inline-block;
+  font-family: Amarante, Verdana, sans-serif;
+  font-size: 16px;
+  padding: 10px 18px;
+
+  background-color: #94A8D0;
+  color: white;
+  text-decoration: none;
+
+  border-radius: 6px;
+
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.download-btn:hover {
+  background-color: #7f93bb;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  color: white;
+}
+
