@@ -16,8 +16,16 @@ p {
 .margin {margin-bottom: 30px;}
 
 a {
-  color: #000000;
+  color: #000000; 
+  text-decoration: underline;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
+
+a:hover {
+  color: #94A8D0;          
+  transform: translateY(-1px); 
+}
+
 
 /*sidebr */
 
@@ -128,4 +136,27 @@ code {
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
   color: white;
 }
+
+.flexrow-two-col {
+  display: flex;
+  flex-wrap: wrap;     
+  align-items: flex-start;
+  gap: 20px;         
+  margin-bottom: 30px;
+}
+
+.text-col {
+  flex: 1 1 300px;     
+}
+
+.image-col {
+  flex: 1 1 300px;      
+}
+
+.image-col img {
+  width: 100%;                    
+  max-width: 500px;               
+  height: auto;
+}
+
 
