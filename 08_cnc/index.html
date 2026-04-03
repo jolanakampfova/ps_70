@@ -41,25 +41,61 @@
                 <p> 
                   <h3>Week 8: CNC Machining </h3>
                 </p>
-               <label class="switch">
-  <input type="checkbox" id="lightToggle" checked>
-  <span class="slider"></span>
-</label>
+                 <img src="my3cncmistakes.png" alt="My 3 CNC mistakes" style="width: 100%; max-width: 1000px; height: auto;">
 
-<br><br>
+                 <div class="row">
 
-<img id="lightImage" src="ligon.jpeg" width="400">
+  <!-- LEFT: text (narrow) -->
+  <div class="col-md-4">
+    <p>
+      Currently, in my art classes, I am working on doing ice sculptures and was interested in whether this process could be made easier through using a CNC machine. Therefore, after fighting with the CNC machine for a good two hours, I emerged with a carved shape that approximately resembled a jellyfish. I then vacuum-formed the kinda-jellyfish, put tonic water into it and let it freeze overnight. Since I used tonic water, you can see what happens, if I shine a UV light at it...
+    </p>
+    <h4>Slide to turn off the lights:</h4>
+    <input type="range" min="0" max="1" value="1" id="lightSlider">
+  </div>
+
+  <!-- RIGHT: slider + image -->
+  <div class="col-md-8 text-center">
+
+    <img id="lightImage" src="ligon.jpeg" width="400">
+
+  </div>
+
+</div>
+
+
+
+<style>
+#lightSlider {
+  width: 200px;
+  appearance: none;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(to right, #004aad, #cae1ff);
+  outline: none;
+}
+
+/* Slider thumb */
+#lightSlider::-webkit-slider-thumb {
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid #888;
+}
+</style>
 
 <script>
-const toggle = document.getElementById("lightToggle");
+const slider = document.getElementById("lightSlider");
 const img = document.getElementById("lightImage");
 
-// Runs when user switches
-toggle.addEventListener("change", function() {
-  if (this.checked) {
-    img.src = "ligon.jpeg";
+slider.addEventListener("input", function() {
+  if (this.value == "1") {
+    img.src = "ligon.jpeg";   // ON
   } else {
-    img.src = "ligoff.jpeg";
+    img.src = "ligoff.jpeg";  // OFF
   }
 });
 </script>
