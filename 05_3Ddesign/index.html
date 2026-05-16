@@ -14,6 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Grenze+Gotisch:wght@100..900&family=Plaster&display=swap" rel="stylesheet">
 
   <link href="../style.css" rel="stylesheet">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.2.0/model-viewer.min.js"></script>
 </head>
 
 <body>
@@ -55,22 +56,37 @@
 
         <div class="row">
 
-          <h4>Assignment: Model and 3D print something</h4>
+          <h4>Assignment 1: Model and 3D print something</h4>
 
           <div class="col-md-8">
 
             <p>
-              For my assignment, I designed and 3D printed a small prototype
-              object using CAD software. I focused on creating a shape that
-              could only realistically be manufactured through additive
-              fabrication methods.
-            </p>
+              For week 3, I decided to make the small toy planes that appear in my  <a href="https://jolanakampfova.github.io/ps_70/03_fabrication/index.html">week 3 kinetic sculpture</a>. As I explain in my week 3 documentation, the scultpure was used to block the projector in certain places for my animation installation. Using 3D printing, I got to experiment with different types of fillament and therefore also different shadows. </p>
 
-            <p>
-              I learned how to prepare STL files, adjust slicer settings,
-              and troubleshoot print quality issues such as overhangs and
-              layer adhesion.
-            </p>
+            <img src="3dprintplane.png" alt="3D print plane" style="width: 100%; max-width: 1000px; height: auto;">
+            <img src="projectorexperiment.png" alt="Projector experiment" style="width: 100%; max-width: 1000px; height: auto;">
+
+            <div class="flexrow">
+                    <a class="download-btn" href="toyplane.zip" download>
+                     ⬇ Download Files
+                   </a>
+                 </div>
+
+          </div>
+
+          <h4>Assignment 2: Scan</h4>
+
+          <model-viewer src="coffeecup.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1"> </model-viewer>
+
+
+
+
+
+          <div class="flexrow">
+                    <a class="download-btn" href="coffeecup.obj" download>
+                     ⬇ Download File
+                   </a>
+                 </div>
 
           </div>
 
