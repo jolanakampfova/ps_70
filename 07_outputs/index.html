@@ -1,40 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<title>PS70: Intro to Digital Fabrication </title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="../style.css" rel="stylesheet">
-
-
-<nav class="navbar navbar-expand-sm navbar-dark" style=" color: #EEE7E8;">
-  <div style="align-items: center; justify-content: center;" class="container-fluid">
-    <div class="flexrow">
-      <h2 class="nav-title">PS70 Fall 2024</h2>
-    </div>
-    <div class="navbar-nav">
-      <h4><a class="nav-link" href="../index.html">Home</a></h4>
-      <h4><a class="nav-link" href="../about.html">About</a></h4>
-    </div>
-  </div>
-</nav>
+<head>
+  <title>PS70: Intro to Digital Fabrication</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Grenze+Gotisch:wght@100..900&family=Plaster&display=swap" rel="stylesheet">
+  <link href="../style.css" rel="stylesheet">
+</head>
 
 <body>
-<xmp style="display:none;">
-<div class="textcontainer">
-<p class="margin">   </p>
 
-<h3>Week 7: Electronic Outputs</h3>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+      <div class="position-sticky pt-3">
+        <img src="../ps70-spring26-title.png" alt="PS70 Spring26" style="width: 85%; max-width: 200px; height: auto;">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2">
+            <a class="nav-link active" href="../index.html">Home</a>
+          </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="../about.html">About</a>
+          </li>
+        </ul>
+        <hr class="mx-3">
+        <p class="px-3 text-muted" style="font-size: 0.8rem;">2026</p>
+      </div>
+    </nav>
 
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+      <div class="textcontainer py-5">
+        <h3>Week 7: Minimal Viable Project</h3>
 
+        <p>
+          If anyone has ever pondered about the uselessness of singing glasses, I can assure you, they bring absolutely no good to society. If you have been spared of the knowledge of what a singing glass is, let me take away that blissful innocence: it is an acoustic phenomenon where by rubbing a moistened finger around the rim of a thin glass you create a continuous tone, which you can modulate by adding or subtracting water. I thought it would be fun to find a way to automate it. My first design, which you can see right here, came with what I thought was the most close replication of what the human finger did: a motor that goes around in circles.
+        </p>
 
-<h4>Assignment: Minimum Viable Product for Final Project</h4>
+        <img src="framework.png" alt="Final project" style="max-width: 900px; width: 100%;">
 
+        <p>
+          I thought this was a rather schematic/simplistic idea at tackling this problem and was convinced that there had to exist something better out there (<a href="https://jolanakampfova.github.io/ps_70/13_finalproject/index.html">lol</a>) but decided to go ahead with it for my minimum viable project nonetheless. I was hoping to get some kind of structure working such that I could then mount the hydraulic pump and an ultrasonic sensor at the top to control the levels of water. I wrote a baseline of code but ran into a pretty significant problem: my prototype was so unstable and loud that it was nearly impossible to get the glass singing.
+        </p>
 
+        <div class="flexrow">
+          <a class="download-btn" href="mvpfiles.zip" download>
+            ⬇ Download Files and Code
+          </a>
+        </div>
+
+        <p>
+          To remedy this I decided to take the advice from the MVP presenting session, stop trying to make the top spin and instead create a spinning base for the glass. Find out how that went in the <a href="https://jolanakampfova.github.io/ps_70/13_finalproject/index.html">next thrilling chapter</a> of this story...
+        </p>
+      </div>
+    </main>
+  </div>
 </div>
-</xmp>
+
 </body>
-
-<script src="../strapdown.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
-
 </html>
