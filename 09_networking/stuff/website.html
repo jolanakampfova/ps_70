@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>It's Earthquake time</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amarante&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font: 20px Amarante, Verdana, sans-serif;
+      line-height: 1.8;
+      color: #fff;
+      background-color: #94A8D0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 0.1rem;
+    }
+
+    #clock {
+      font-size: 4.5rem;
+      letter-spacing: 2px;
+    }
+
+    #zone-label {
+      font-family: "Gill Sans", sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 1.5rem;
+    }
+
+    #song-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px 40px;
+      text-align: center;
+      color: #333;
+    }
+
+    #symbol {
+      font-size: 2rem;
+      color: #94A8D0;
+      line-height: 1;
+    }
+
+    #song-name {
+      font-size: 1.1rem;
+      margin-top: 0.3rem;
+    }
+
+    #song-name a {
+      color: #000;
+      text-decoration: underline;
+      transition: color 0.2s ease;
+    }
+
+    #song-name a:hover {
+      color: #94A8D0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="clock">00:00:00</div>
+  <div id="zone-label">—</div>
+
+  <div id="song-card">
+    <div id="symbol">◌</div>
+    <div id="song-name"><a id="song-link" href="#" target="_blank">loading...</a></div>
+  </div>
+
+  <script>
+    const zones = [
+      {
+        check: h => h >= 5 && h < 12,
+        label: 'Morning',
+        symbol: '◌',
+        song: 'Never Gonna Give You Up',
+        url: 'https://youtu.be/dQw4w9WgXcQ?si=zRbqsAqtdKqhEkU3'
+      },
+      {
+        check: h => h >= 12 && h < 15,
+        label: 'Noon',
+        symbol: '●',
+        song: 'Baby Shark',
+        url: 'https://youtu.be/XqZsoesa55w?si=kgbn3bDsRtjZsqTB'
+      },
+      {
+        check: h => h >= 15 || h < 5,
+        label: 'Night',
+        symbol: '◗',
+        song: 'Nyan Cat',
+        url: 'https://youtu.be/2yJgwwDcgV8?si=D_8JoTwsB4HYeycE'
+      }
+    ];
+
+    function update() {
+      const now = new Date();
+      const h   = now.getHours();
+      const pad = n => String(n).padStart(2, '0');
+
+      document.getElementById('clock').textContent     = `${pad(h)}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+
+      const zone = zones.find(z => z.check(h));
+      document.getElementById('zone-label').textContent = zone.label;
+      document.getElementById('symbol').textContent     = zone.symbol;
+      document.getElementById('song-link').textContent  = zone.song;
+      document.getElementById('song-link').href         = zone.url;
+    }
+
+    setInterval(update, 1000);
+    update();
+  </script>
+</body>
+</html>

@@ -1,48 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<title>PS70: Intro to Digital Fabrication </title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="../style.css" rel="stylesheet">
-
-
-<nav class="navbar navbar-expand-sm navbar-dark" style=" color: #EEE7E8;">
-  <div style="align-items: center; justify-content: center;" class="container-fluid">
-    <div class="flexrow">
-      <h2 class="nav-title">PS70 Fall 2024</h2>
-    </div>
-    <div class="navbar-nav">
-      <h4><a class="nav-link" href="../index.html">Home</a></h4>
-      <h4><a class="nav-link" href="../about.html">About</a></h4>
-    </div>
-  </div>
-</nav>
+<head>
+  <title>PS70: Intro to Digital Fabrication </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Grenze+Gotisch:wght@100..900&family=Plaster&display=swap" rel="stylesheet">
+  <link href="../style.css" rel="stylesheet">
+</head>
 
 <body>
-<xmp style="display:none;">
-<div class="textcontainer">
-<p class="margin">   </p>
 
-<h3>Week 9: Radio, WiFi, Bluetooth (IoT)</h3>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+            <div class="position-sticky pt-3">
+                <img src="../ps70-spring26-title.png" alt="PS70 Spring26" style="width: 85%; max-width: 200px; height: auto;">
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link active" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link" href="../about.html">About</a>
+                    </li>
+                    <li class="nav-item mb-2">
+    
+                    </li>
+                </ul>
+                <hr class="mx-3">
+                <p class="px-3 text-muted" style="font-size: 0.8rem;">2026</p>
+            </div>
+        </nav>
 
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+            <div class="textcontainer py-5">
+                <h3>Week 9: Networking</h3>
+                
+                <p>
+                  I have used Arduinos to both host a Wifi and also to connect to a Wifi in my week 6 inputs assignments, where I use them to connect different controllers to an online game. However, because it is lame to double-submit assignment and I wanted to play around with cool sensors, I have come up with a particularly useless thing: a earthquake-time adaptable warning system (the useless is in the time-adaptable, not the earthquake warning system). The idea was that if a sensor detects vibration, it checks the local time. If it is early in the morning, maybe it needs to be louder, so it plays <a href="https://youtu.be/dQw4w9WgXcQ?si=hhX5N_E1NRTtlDts">one sound</a>, if it is later, the noise levels have changed, so it plays a <a href="https://youtu.be/2yJgwwDcgV8?si=0rWsFjRKIZkYeNII">different sound</a>. I used a <a href="https://sensorkit.joy-it.net/en/sensors/ky-031">knock sensor</a> and a <a href="https://sensorkit.joy-it.net/en/sensors/ky-012">Piezo buzzer</a>. Unfortunately, the knock sensor was not as sensitive as I had hoped (to be fair, I had not tested it under earthquake condition), so one had to truly drop it a couple of times before it made a sound. I also made a <a href="./stuff/website.html">website</a> where one could watch which song was going to be on, depending on the time.
+                </p>
 
-<p class="margin">   </p>
-<div class="flexrow">
-  <a id="btn" href="wk9.zip" download>Download my files from this week!
-  </a>
+                <div class="text-center my-4">
+                  <video width="80%" controls style="max-width: 1000px;">
+                    <source src="videoofthing.mov" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+
+                <div class="my-4">
+                  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#codeCollapse" aria-expanded="false" aria-controls="codeCollapse">
+                    Show/Hide Code
+                  </button>
+                  
+                  <div class="collapse mt-3" id="codeCollapse">
+                    <div class="card card-body">
+                      <pre><code>#include &lt;TimeLib.h&gt;
+
+#define BUZZER D6
+#define KNOCK  D10
+
+// set once before upload
+#define START_HOUR 10
+#define START_MIN  44
+
+#define REST 0
+
+// notes
+#define C4 262
+#define D4 294
+#define E4 330
+#define G4 392
+#define A4 440
+#define B4 494
+#define C5 523
+#define D5 587
+#define E5 659
+#define Fs5 740
+#define G5 784
+#define Gs5 831
+#define A5 880
+#define B5 988
+#define Ds5 622
+
+// songs
+int nggyu_notes[] = {A4, B4, D5, B4, Fs5, Fs5, E5, D5};
+int nggyu_len[]   = {8, 8, 4, 8, 4, 8, 4, 2};
+int nggyu_bpm = 113;
+
+int baby_notes[] = {C5, C5, C5, E5, G5, REST, G5, G5, G5};
+int baby_len[]   = {8, 8, 8, 8, 4, 8, 8, 8, 2};
+int baby_bpm = 115;
+
+int nyan_notes[] = {Fs5, Gs5, B5, Fs5, Gs5, Ds5, Fs5, B5};
+int nyan_len[]   = {8, 8, 8, 8, 8, 8, 8, 4};
+int nyan_bpm = 160;
+
+#define LEN(x) (sizeof(x) / sizeof(x[0]))
+
+void playNote(int freq, int len, int bpm) {
+  int ms = (60000 / bpm) * 4 / len;
+
+  if (freq == REST) {
+    delay(ms);
+    return;
+  }
+
+  tone(BUZZER, freq, ms * 0.9);
+  delay(ms);
+  noTone(BUZZER);
+}
+
+void playSong(int *notes, int *dur, int count, int bpm) {
+  for (int i = 0; i &lt; count; i++) {
+    playNote(notes[i], dur[i], bpm);
+  }
+}
+
+void setup() {
+  pinMode(BUZZER, OUTPUT);
+  pinMode(KNOCK, INPUT);
+
+  Serial.begin(9600);
+
+  setTime(START_HOUR, START_MIN, 0, 17, 5, 2026);
+}
+
+bool prevKnock = LOW;
+
+void loop() {
+  bool knock = digitalRead(KNOCK);
+
+  if (knock && !prevKnock) {
+    int h = hour();
+
+    Serial.print("Knock at ");
+    Serial.print(h);
+    Serial.print(":");
+    if (minute() &lt; 10) Serial.print("0");
+    Serial.print(minute());
+    Serial.print(" → ");
+
+    if (h &lt; 12) {
+      Serial.println("Never Gonna Give You Up");
+      playSong(nggyu_notes, nggyu_len, LEN(nggyu_notes), nggyu_bpm);
+    }
+    else if (h &lt; 15) {
+      Serial.println("Baby Shark");
+      playSong(baby_notes, baby_len, LEN(baby_notes), baby_bpm);
+    }
+    else {
+      Serial.println("Nyan Cat");
+      playSong(nyan_notes, nyan_len, LEN(nyan_notes), nyan_bpm);
+    }
+
+    delay(600); // simple debounce after playback
+  }
+
+  prevKnock = knock;
+  delay(10);
+}</code></pre>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+        </main> 
+    </div> 
 </div>
-<p class="margin">   </p>
 
-<h4>Assignment: [Program something with IOT]</h4>
-
-
-
-
-</div>
-</xmp>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
-<script src="../strapdown.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
-
 </html>
