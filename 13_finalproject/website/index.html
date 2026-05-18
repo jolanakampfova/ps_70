@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Singing Glass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amarante&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, Verdana, sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #000;
+      min-height: 100vh;
+      background-color: #1a1f3a;
+      background-image: url('assets/bg.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+    }
+
+    h1 { font-family: Amarante, Verdana, sans-serif; }
+
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    /* ── header ── */
+
+    header {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1.8rem 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    header h1 { font-size: 2.2rem; letter-spacing: 0.02em; }
+
+    .playing-note {
+      font-family: Amarante, Verdana, sans-serif;
+      font-size: 1.6rem;
+      color: #94A8D0;
+      min-width: 60px;
+      text-align: right;
+    }
+
+    /* ── piano card ── */
+
+    .piano-card {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 2rem 2rem 1.6rem;
+    }
+
+    /* piano image stack — base + key highlight layers all same size */
+    .piano-stack {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto 1.8rem;
+    }
+
+    .piano-stack img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* base drawing always visible */
+    .piano-base { position: relative; z-index: 1; }
+
+    /* individual key overlays: invisible by default, shown on .active */
+    .piano-key-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 2;
+      pointer-events: none;
+      /* tint the periwinkle stroke to show selection */
+      filter: saturate(3) brightness(0.75) hue-rotate(10deg);
+    }
+
+    .piano-key-overlay.active { opacity: 1; }
+
+    /* ── note buttons ── */
+
+    .note-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .note-btn {
+      font-family: Amarante, Verdana, sans-serif;
+      font-size: 14px;
+      padding: 9px 16px;
+      min-width: 58px;
+      background: #ffffff;
+      color: #000;
+      border: 1px solid #94A8D0;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s, color 0.15s;
+    }
+
+    .note-btn:hover {
+      background: #94A8D0;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(148,168,208,0.4);
+    }
+
+    .note-btn.playing {
+      background: #000 !important;
+      color: #fff !important;
+      border-color: #000 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* ── controls ── */
+
+    .controls {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: #94A8D0;
+      box-shadow: 0 0 6px #94A8D0;
+      flex-shrink: 0;
+    }
+
+    .status-text { font-size: 14px; color: #555; flex: 1; }
+
+    .btn {
+      font-family: Amarante, Verdana, sans-serif;
+      font-size: 14px;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 3px 8px rgba(0,0,0,0.12); }
+
+    .btn-primary       { background: #94A8D0; color: #fff; }
+    .btn-primary:hover { background: #7f93bb; }
+    .btn-primary.live  { background: #000; color: #fff; }
+
+    .btn-outline       { background: #fff; color: #000; border: 1px solid #bbb; }
+    .btn-outline:hover { background: #f0f0f0; }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Singing Glass</h1>
+    <div class="playing-note" id="playingNote">—</div>
+  </header>
+
+  <div class="piano-card">
+    <div class="piano-stack" id="pianoStack">
+      <!-- base piano drawing -->
+      <img class="piano-base" src="assets/piano.png" alt="piano">
+      <!-- one overlay per key image; data-keys lists which notes trigger it -->
+      <img class="piano-key-overlay" src="assets/piano1.png" data-keys="B4,C5"     alt="">
+      <img class="piano-key-overlay" src="assets/piano2.png" data-keys="C#5,D5"    alt="">
+      <img class="piano-key-overlay" src="assets/piano3.png" data-keys="D#5,E5"    alt="">
+      <img class="piano-key-overlay" src="assets/piano4.png" data-keys="F5,F#5,G5" alt="">
+      <img class="piano-key-overlay" src="assets/piano5.png" data-keys="G#5,A5,A#5"alt="">
+      <img class="piano-key-overlay" src="assets/piano6.png" data-keys="B5,C6,C#6,D6" alt="">
+    </div>
+
+    <div class="note-row" id="noteRow"></div>
+  </div>
+
+  <div class="controls">
+    <div class="status-dot"  id="statusDot"></div>
+    <span class="status-text" id="statusText">Ready</span>
+    <button class="btn btn-outline"  onclick="stopNote()">Stop</button>
+    <button class="btn btn-primary" id="connectBtn" onclick="toggleConnect()">Connect</button>
+  </div>
+
+  <footer>Singing Glass · Web Serial · Chrome / Edge</footer>
+
+</div>
+<script>
+// Notes shown as buttons — natural notes B4–D6
+const NOTES = ['B4','C5','D5','E5','F5','G5','A5','B5','C6','D6'];
+
+// Also accept sharps when Arduino sends them
+const ALL_NOTES = [
+  'B4','C5','C#5','D5','D#5','E5','F5','F#5','G5','G#5','A5','A#5','B5','C6','C#6','D6'
+];
+
+let port = null, writer = null, connected = false;
+
+// ── Build note buttons ────────────────────────────────────────
+
+function buildButtons() {
+  const row = document.getElementById('noteRow');
+  NOTES.forEach(note => {
+    const btn = document.createElement('button');
+    btn.className = 'note-btn';
+    btn.dataset.note = note;
+    btn.textContent = note;
+    btn.onclick = () => playNote(note);
+    row.appendChild(btn);
+  });
+}
+
+// ── Highlight active note ─────────────────────────────────────
+
+function highlightNote(note) {
+  // buttons
+  document.querySelectorAll('.note-btn').forEach(b => {
+    b.classList.toggle('playing', b.dataset.note === note);
+  });
+
+  // piano key overlays
+  document.querySelectorAll('.piano-key-overlay').forEach(img => {
+    const keys = img.dataset.keys.split(',');
+    img.classList.toggle('active', note && keys.includes(note));
+  });
+
+  document.getElementById('playingNote').textContent = note || '—';
+}
+
+// ── Play / stop ───────────────────────────────────────────────
+
+function playNote(note) {
+  highlightNote(note);
+  if (connected) sendCmd('PLAY:' + note);
+}
+
+function stopNote() {
+  highlightNote(null);
+  if (connected) sendCmd('STOP');
+}
+
+// ── Serial ────────────────────────────────────────────────────
+
+async function toggleConnect() {
+  connected ? await disconnect() : await connect();
+}
+
+async function connect() {
+  if (!('serial' in navigator)) return;
+  try {
+    port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 9600 });
+
+    const enc = new TextEncoderStream();
+    enc.readable.pipeTo(port.writable);
+    writer = enc.writable.getWriter();
+
+    const dec = new TextDecoderStream();
+    port.readable.pipeTo(dec.writable);
+    readLoop(dec.readable.getReader());
+
+    connected = true;
+    document.getElementById('connectBtn').textContent = 'Disconnect';
+    document.getElementById('connectBtn').classList.add('live');
+    document.getElementById('statusText').textContent = 'Arduino connected';
+    document.getElementById('statusDot').style.cssText =
+      'background:#22c55e;box-shadow:0 0 6px #22c55e';
+
+    setTimeout(() => sendCmd('LIST'), 1500);
+  } catch (_) {}
+}
+
+async function readLoop(reader) {
+  let buf = '';
+  try {
+    while (connected) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += value;
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      lines.forEach(l => handleMsg(l.trim()));
+    }
+  } catch (_) {}
+}
+
+function handleMsg(msg) {
+  if (!msg) return;
+  if (msg.startsWith('STATUS:')) {
+    const s = msg.slice(7);
+    if (s.startsWith('playing ')) highlightNote(s.slice(8).trim());
+    else if (s === 'stopped' || s === 'ready') highlightNote(null);
+  }
+}
+
+async function sendCmd(cmd) {
+  if (!writer) return;
+  try { await writer.write(cmd + '\n'); } catch (_) {}
+}
+
+async function disconnect() {
+  connected = false;
+  try { if (writer) await writer.close(); } catch (_) {}
+  try { if (port)   await port.close();   } catch (_) {}
+  writer = null; port = null;
+  document.getElementById('connectBtn').textContent = 'Connect';
+  document.getElementById('connectBtn').classList.remove('live');
+  document.getElementById('statusText').textContent = 'Ready';
+  document.getElementById('statusDot').style.cssText =
+    'background:#94A8D0;box-shadow:0 0 6px #94A8D0';
+  highlightNote(null);
+}
+
+buildButtons();
+</script>
+</body>
+</html>

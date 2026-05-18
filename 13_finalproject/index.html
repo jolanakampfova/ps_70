@@ -2,55 +2,175 @@
 <html lang="en">
 
 <head>
-  <title>PS70: Intro to Digital Fabrication </title>
+  <title>PS70: Final Project — Singing Glass Machine</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amarante&family=Grenze+Gotisch:wght@100..900&family=Plaster&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Grenze+Gotisch:wght@100..900&family=Plaster&display=swap" rel="stylesheet">
   <link href="../style.css" rel="stylesheet">
-
+  <style>
+    .section-heading {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .img-caption {
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: 0.4rem;
+    }
+    .media-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+    .media-row > * {
+      flex: 1 1 0;
+      min-width: 200px;
+    }
+    .media-row video,
+    .media-row img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .download-btn {
+      display: inline-block;
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="container-fluid">
-    <div class="row">
-        <nav class="col-md-3 col-lg-2 d-md-block sidebar">
-            <div class="position-sticky pt-3">
-                <img src="../ps70-spring26-title.png" alt="PS70 Spring26" style="width: 85%; max-width: 200px; height: auto;">
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a class="nav-link active" href="../index.html">Home</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link" href="../about.html">About</a>
-                    </li>
-                    <li class="nav-item mb-2">
-    
-                    </li>
-                </ul>
-                <hr class="mx-3">
-                <p class="px-3 text-muted" style="font-size: 0.8rem;">2026</p>
-            </div>
-        </nav>
+  <div class="row">
+    <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+      <div class="position-sticky pt-3">
+        <img src="../ps70-spring26-title.png" alt="PS70 Spring26" style="width: 85%; max-width: 200px; height: auto;">
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2">
+            <a class="nav-link active" href="../index.html">Home</a>
+          </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="../about.html">About</a>
+          </li>
+        </ul>
+        <hr class="mx-3">
+        <p class="px-3 text-muted" style="font-size: 0.8rem;">2026</p>
+      </div>
+    </nav>
 
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+      <div class="textcontainer py-5">
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-            <div class="textcontainer py-5">
-               <img src="finalproject.gif" alt="Final project" style="max-width: 600px; width: 100%;">
-               <br>
-               <img src="framework.png" alt="Final project" style="max-width: 900px; width: 100%;">
+        <!-- HEADER GIF -->
+        <img src="finalproject.gif" alt="Final project" style="max-width: 100%; width: 100%; display: block; margin-bottom: 1.5rem;">
 
+        <!-- VIDEO -->
+        <video autoplay controls style="max-width: 800px; width: 100%; display: block; margin-bottom: 1.5rem;">
+          <source src="finalprojectvideo.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
 
+        <!-- INTRO -->
+        <p>
+          My final project is a machine that plays a wine glass, by spinning it against a stationary wet finger pad, it produces the same eerie, resonant tone you get when you run your finger around the rim of a glass. Think automated glass harmonica. The pitch can be modulated by how much water is in the glass, and I built a small web interface to help with that tuning. If you want to see where this idea started, have a look at <a href="../week06/index.html">Week 6</a>.
+        </p>
 
-                
-            </div>
-        </main> 
-      </div> 
-    </div> 
-     
+        <!-- FIRST DESIGN -->
+        <img src="framework.png" alt="First design framework" style="max-width: 900px; width: 100%; display: block;">
+        <p class="img-caption">My first design — the blueprint that started everything.</p>
 
-  </body>
+        <!-- ATTEMPT 1 -->
+        <h2 class="section-heading">Attempt 1</h2>
+
+        <p>
+          I hated the way my MVP worked so much that I was willing to try anything, as long as it didn't
+          involve something spinning in the air. I settled on a stepper motor connected via a timing belt
+          to a holder for the wine glass. I'm genuinely proud of the timing belt design and the 3D-printed
+          bearings (inspired by
+          <a href="https://youtu.be/NIIVZcgJWPs?si=QxPPzDbo_9FlyFfB" target="_blank" rel="noopener">this video</a>),
+          but the whole thing had one fatal flaw: it didn't work.
+        </p>
+        <p>
+          I had spent way too much time making sure everything fit together precisely, without stopping to check
+          whether the pressure or the rotational speed would actually be enough to excite the glass. The glass
+          itself wasn't ideal either. I only abandoned the approach the night before the PS70 faire, dusting off
+          a prototype from much earlier. The wiring was standard stepper motor, the same setup we used in the
+          <a href="../week10/index.html">drawing machine in Week 10</a>.
+        </p>
+
+        <div class="media-row">
+          <div>
+            <video autoplay loop muted playsinline>
+              <source src="spinningglass.mov" type="video/mp4">
+            </video>
+            <p class="img-caption">The timing belt prototype in motion.</p>
+          </div>
+          <div>
+            <img src="finalver1.jpeg" alt="Version 1 assembled">
+            <p class="img-caption">Version 1 fully assembled.</p>
+          </div>
+        </div>
+
+        <div class="media-row">
+          <div>
+            <img src="differentprints.jpeg" alt="Different 3D prints">
+            <p class="img-caption">Iterations of 3D-printed parts.</p>
+          </div>
+          <div>
+            <img src="differentversion.png" alt="Different design versions">
+            <p class="img-caption">Design versions side by side.</p>
+          </div>
+        </div>
+
+        <a href="FinalProjectVer1.zip" class="btn btn-outline-secondary download-btn" download>
+          Download Version 1 3D Files
+        </a>
+
+        <!-- ATTEMPT 2 -->
+        <h2 class="section-heading">Attempt 2</h2>
+
+        <p>
+          I still wanted to finish this properly — unfortunately, the semester ended and I had to go home. It was a fun conversation explaining to the TSA agent why I was traveling with quite so many cables. I also severely overestimated how easy it would be to find a 3D printer in Prague. But thanks to my grandma (!!!), who asked one of her students, I got to print one final iteration (this kind of constraint makes you suddenly very meticulous, since every print decision matters). 
+        </p>
+        <p>
+          The top section I'd designed to mount the ultrasonic sensor broke during printing, but everything else remained functional. I also built a small web tool (with some LLM help) to assist with pitch
+          modulation, you can try it <a href="./website/index.html">here</a>. The wiring was completely standard: both motors go through a motor driver, and the ultrasonic sensor connects directly to pins on the Arduino.
+        </p>
+
+        <div class="media-row">
+          <div>
+            <img src="pictureofthing1.jpeg" alt="Final build photo 1">
+          </div>
+          <div>
+            <img src="pictureofthing2.jpeg" alt="Final build photo 2">
+          </div>
+          <div>
+            <img src="pictureofthing3.jpeg" alt="Final build photo 3">
+          </div>
+        </div>
+
+        <video autoplay loop muted playsinline controls style="max-width: 700px; width: 100%; display: block; margin-bottom: 1.5rem;">
+          <source src="videoofthings.MOV" type="video/mp4">
+        </video>
+
+        <img src="newmodel.png" alt="New model design" style="max-width: 700px; width: 100%; display: block;">
+        <p class="img-caption">The final model.</p>
+
+        <a href="Ver2.zip" class="btn btn-outline-secondary download-btn" download>
+          Download 3D Files + Code
+        </a>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+</body>
 </html>
